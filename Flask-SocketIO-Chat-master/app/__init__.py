@@ -1,7 +1,7 @@
 from flask import Flask
-from flask_socketio import socketio
+from flask_socketio import SocketIO
 
-socketio = socketio()
+socketio = SocketIO()
 
 
 def create_app(debug=False):
