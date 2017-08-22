@@ -1,3 +1,4 @@
+
 # Copyright 2015 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +16,10 @@
 # [START app]
 import logging
 
-from flask import Flask
+#-# coding:utf-8 #-#
 
+from flask import Flask
+from dbconnect import connection, run_query           
 
 app = Flask(__name__)
 
@@ -24,9 +27,25 @@ app = Flask(__name__)
 @app.route('/')
 def hello():
     """Return a friendly HTTP greeting."""
-    return 'Hello Amor!'
+    return 'Welcome to the first medical virtual classroom by Sandra Vela and Francisco Castillo'
+		
+@app.route('/register/', methods=["GET","POST"])
+def register_page():
+    user = "frocast"
+    nombre = "Francisco"
+    eCorreo = "fra.castilloa@gmail.com"
+    Contrasena = "1234"
 
-
+    try:
+        #c, conn = connection()
+        #query = 'INSERT INTO usuarios (Usuario, Nombre, eCorreo, Contrasena) VALUES ("%s", "%s", "%s", "%s")' %(user, nombre, eCorreo, Contrasena)
+        #query = 'UPDATE usuarios SET Nombre = "Sandra" WHERE Contrasena = "" '
+        query = 'SELECT Nombre FROM usuarios WHERE contrasena = "" '
+        print run_query(query)
+        return("Operacion exitosa")
+    except Exception as e:
+        return(str(e))
+		
 @app.errorhandler(500)
 def server_error(e):
     logging.exception('An error occurred during a request.')
@@ -41,3 +60,4 @@ if __name__ == '__main__':
     # application on Google App Engine. See entrypoint in app.yaml.
     app.run(host='127.0.0.1', port=8080, debug=True)
 # [END app]
+
